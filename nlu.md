@@ -1,0 +1,67 @@
+## intent:greet
+- hey
+- hello
+- hi
+- hello there
+- good morning
+- good evening
+- heya
+- hey there
+- let's go
+- hey dude
+- goodmorning
+- goodevening
+- good afternoon
+- hey
+- hey
+
+## intent:goodbye
+- cu
+- good by
+- cee you later
+- bye
+- goodbye
+- bye bye
+- see you later
+- talk to you later
+
+## intent:appraisal_thank_you
+- you helped a lot thank you
+- appreciate your help
+- cheers
+- thank you
+- thanks
+- thanks a lot
+- terrific thank you
+- great thank you
+- thanks so much
+- thank you so much
+- thanks for your help
+- thank you for your help
+- nice thank you
+- I appreciate it
+- I thank you
+- thank you that will be all
+- thanks buddy
+- thanks love
+- thank you my friend
+- well thanks
+- very good thank you
+- good thanks
+- thanks again
+- thank you again
+- all thank you
+- alright thank you
+- alright thanks
+- no thank you that's all
+- perfect thank you
+- so nice of you
+- well thank you
+- well thanks
+- thnx
+- thank you
+- tqsm
+- ty
+- thanks
+- tq
+- thanQ

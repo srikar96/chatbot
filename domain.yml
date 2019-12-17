@@ -1,0 +1,39 @@
+intents:
+  - greet
+  - goodbye
+  - appraisal_thank_you
+
+actions:
+  - utter_greet
+  - utter_goodbye
+  - utter_appraisal_thank_you
+
+templates:
+  utter_greet:
+  - text: "Hey! How can I help you?"
+    buttons:
+    - title: "What can you do?"
+      payload: '/bot_functions_faq'
+    - title: "Who are you?"
+      payload: '/utter_agent_identity_faq'
+  - text: "Hello! What can I do for you?"
+    buttons:
+    - title: "Who are you?"
+      payload: '/utter_agent_identity_faq'
+    - title: "What can you do?"
+      payload: '/bot_functions_faq'
+  - text: "Hi! What's up?"
+    buttons:
+    - title: "What can you do?"
+      payload: '/bot_functions_faq'
+    - title: "Who are you?"
+      payload: '/utter_agent_identity_faq'
+
+  utter_goodbye:
+  - text: "Bye"
+  - text: "Good Bye!\nHave a nice day!"
+  - text: "See you!"
+  
+  utter_appraisal_thank_you:
+  - text: "Anytime. That's what I'm here for"
+  - text: "It's my pleasure to help."

@@ -1,0 +1,15 @@
+#ignore folders
+/OP/models/
+bin/
+etc/
+include/
+lib/
+logs/
+cache-directory/
+share/
+models/
+
+#ignore folder '__pycache__'
+__pycache__
+
+.log
