@@ -65,3 +65,79 @@
 - thanks
 - tq
 - thanQ
+
+## intent:agent_age_faq
+- tell me your age
+- what's your age?
+- your age
+- age of yours
+- how old were you
+- I'd like to know your age
+- how old is your platform
+- how old are you?
+- tell me how old you are
+- how can i know about your age
+- i wanna know your age
+- how long have you been live?
+- what is your age as of today?
+- How old did you turn?
+- How old are you now?
+- what is your age?
+- How old will you be turning?
+- how old r u?
+- From how long you have been here?
+- You look aged
+- how old are you?
+
+## intent:agent_identity_faq
+- Who are you?
+- who are you
+- what r u
+- who r u?
+- your name
+- What should I call you?
+- What is your name?
+- Tell me about you
+- Are you a robot
+- you are robo
+- are you a chatbot
+- who are you?
+- who are you?
+
+## intent:agent_health_faq
+- How are you?
+- h r u
+- how r u
+- How is you?
+- how r you
+- how are u?
+
+##intent:bot_functions_faq
+- What can you do?
+- How can you help me?
+- Tell me some things you can do
+- What are your functions?
+- What else can you do?
+- what is your functionality?
+- your skills?
+- tell me about yourself
+- what all tasks can you perform?
+
+## intent:request_menu
+- show me menu
+- i want the menu
+- i wish to see the menu
+- show menu
+- what do you have?
+- what all do you have
+- what all do u have?
+- show me your items
+- show menu items
+- list menu
+
+## intent:item_request
+- Pizza
+- i want pizza
+- i need a pizza
+- want a pizza
+- need a pizza

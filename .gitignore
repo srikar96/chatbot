@@ -12,4 +12,5 @@ models/
 #ignore folder '__pycache__'
 __pycache__
 
-.log
+# log file
+rasa_core.log

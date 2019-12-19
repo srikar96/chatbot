@@ -15,3 +15,29 @@
 ## thankyou
 * appraisal_thank_you
     - utter_appraisal_thank_you
+
+## FAQ
+* bot_functions_faq OR agent_age_faq OR agent_identity_faq OR agent_health_faq
+    - action_faq
+
+## menu request
+* request_menu
+    - utter_request_menu
+
+## story 2
+* greet
+    - utter_greet
+* bot_functions_faq OR agent_age_faq OR agent_identity_faq OR agent_health_faq
+    - action_faq
+* goodbye
+    - utter_goodbye
+
+## story 3
+* greet
+    - utter_greet
+* bot_functions_faq OR agent_age_faq OR agent_identity_faq OR agent_health_faq
+    - action_faq
+* request_menu
+    - utter_request_menu
+* goodbye
+    - utter_goodbye

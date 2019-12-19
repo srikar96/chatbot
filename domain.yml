@@ -2,11 +2,18 @@ intents:
   - greet
   - goodbye
   - appraisal_thank_you
+  - agent_age_faq
+  - agent_identity_faq
+  - agent_health_faq
+  - bot_functions_faq
+  - request_menu
 
 actions:
   - utter_greet
   - utter_goodbye
   - utter_appraisal_thank_you
+  - action_faq
+  - utter_request_menu
 
 templates:
   utter_greet:
@@ -33,7 +40,27 @@ templates:
   - text: "Bye"
   - text: "Good Bye!\nHave a nice day!"
   - text: "See you!"
-  
+
   utter_appraisal_thank_you:
   - text: "Anytime. That's what I'm here for"
   - text: "It's my pleasure to help."
+
+  utter_bot_functions_faq:
+  - text: "I can help you order your food:\nJust tell me if you want a Pizza or Pasta."
+    buttons:
+    - title: "Pizza"
+      payload: '/book_appointment'
+    - title: "Pasta"
+      payload: '/view_booking'
+
+  utter_agent_age_faq:
+  - text: "I prefer not to answer with a number. I know I'm young."
+  - text: "I was created recently, but don't know my exact age."
+
+  utter_agent_identity_faq:
+  - text: "My name is Arya, I'm here to help you order food"
+  - text: "I am Arya, a chatbot. What can I do for you today?"
+  - text: "I am known as Arya, the pizza bot"
+
+  utter_request_menu:
+  - text: "Here's our menu:\nMENU_LINK\nYou can also make your own Pizza or Pasta. Just tell me if you want to"
