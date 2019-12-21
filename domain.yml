@@ -1,3 +1,26 @@
+slots:
+  pizza_size:
+   type: unfeaturized
+   auto_fill: false
+  crust:
+   type: unfeaturized
+   auto_fill: false
+  toppings_veggies: # Need a list slot
+   type: list
+   auto_fill: false
+   # initial_value: []
+  toppings_meat: # Need a list slot
+   type: list
+   auto_fill: false
+   # initial_value: []
+  toppings_cheese: # Need a list slot
+   type: list
+   auto_fill: false
+   # initial_value: []
+
+forms:
+  - make_own_pizza_form
+
 intents:
   - greet
   - goodbye
@@ -7,6 +30,17 @@ intents:
   - agent_health_faq
   - bot_functions_faq
   - request_menu
+  - make_own_pizza
+  - inform
+  - affirm
+  - deny
+
+entities:
+  - pizza_size
+  - crust
+  - toppings_veggies
+  - toppings_meat
+  - toppings_cheese
 
 actions:
   - utter_greet
@@ -14,6 +48,8 @@ actions:
   - utter_appraisal_thank_you
   - action_faq
   - utter_request_menu
+  - utter_order_confirmation
+  - action_order_confirmation
 
 templates:
   utter_greet:
@@ -64,3 +100,11 @@ templates:
 
   utter_request_menu:
   - text: "Here's our menu:\nMENU_LINK\nYou can also make your own Pizza or Pasta. Just tell me if you want to"
+
+  utter_order_confirmation:
+    - text: "Do you want me to confirm your order?"
+      buttons:
+      - title: "Yes"
+        payload: '/affirm'
+      - title: "No"
+        payload: '/deny'

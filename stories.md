@@ -41,3 +41,21 @@
     - utter_request_menu
 * goodbye
     - utter_goodbye
+
+## Pizza form affirm
+* make_own_pizza
+    - make_own_pizza_form
+    - form{"name": "make_own_pizza_form"}
+    - form{"name": "null"}
+    - utter_order_confirmation
+* affirm
+    - action_order_confirmation
+
+## Pizza form deny
+* make_own_pizza
+    - make_own_pizza_form
+    - form{"name": "make_own_pizza_form"}
+    - form{"name": "null"}
+    - utter_order_confirmation
+* deny
+    - action_order_confirmation

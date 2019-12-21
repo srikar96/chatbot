@@ -19,3 +19,128 @@ class ActionFAQ(Action):
         intent_name = tracker.latest_message['intent'].get('name')
         dispatcher.utter_template('utter_{}'.format(intent_name), tracker)
         return None
+
+class MakeOwnPizzaForm(FormAction):
+    '''
+    Appointment DATE and booking_time details
+    '''
+    def name(self):
+       return "make_own_pizza_form"
+
+    @staticmethod
+    def required_slots(tracker):
+        return ['pizza_size', 'crust', 'toppings_veggies', 'toppings_meat', 'toppings_cheese']
+
+    # def slot_mapping(self):
+    #    return {"doc_id": self.from_entity(entity="doc_id"),
+    #             "booking_time": self.from_entity(entity="booking_time")}
+
+    # def validate(self, dispatcher, tracker, domain):
+    #
+    #     slot_values = self.extract_other_slots(dispatcher, tracker, domain)
+    #     slot_to_fill = tracker.get_slot(REQUESTED_SLOT)
+    #     if slot_to_fill:
+    #         slot_values.update(self.extract_requested_slot(dispatcher,
+    #                                                        tracker, domain))
+    #         if not slot_values:
+    #             raise ActionExecutionRejection(self.name(),
+    #                                            "Failed to validate slot {0} "
+    #                                            "with action {1}"
+    #                                            "".format(slot_to_fill,
+    #                                                      self.name()))
+    #
+    #     for slot, value in slot_values.items():
+    #         # verfity all slots: 1) check if doctor is valid, 2) check if that day is free, 3) check if time is free
+    #         if slot == 'DATE':
+    #             data = date_checker(value, tracker.get_slot('doc_id'), tracker.get_slot('practice_name'))
+    #             if len(data['free']) == 0:
+    #                 dispatcher.utter_message('Sorry, Dr. {} is all booked for {}. Please select a different date.'.format(doc_name(tracker.get_slot('doc_id')), tracker.get_slot('DATE')))
+    #                 slot_values[slot] = None
+    #         elif slot == 'booking_time':
+    #             data = date_checker(tracker.get_slot('DATE'), tracker.get_slot('doc_id'), tracker.get_slot('practice_name'))
+    #             data1 = t_convert_rev(value)
+    #             if data1 not in data['free']:
+    #                 dispatcher.utter_template('utter_ask_booking_time_overtime', tracker)
+    #                 slot_values[slot] = None
+    #
+    #     return [SlotSet(slot, value) for slot, value in slot_values.items()]
+
+    def request_next_slot(self, dispatcher, tracker, domain):
+        '''
+        Request the next slot and utter template if needed,
+        else return None
+        '''
+
+        for slot in self.required_slots(tracker):
+            if self._should_request_slot(tracker, slot):
+                logger.debug("Request next slot '{}'".format(slot))
+                if slot == 'pizza_size':
+                    buttons_pizza_size = []
+                    for i in ['small','medium','large']:
+                        buttons_pizza_size.append({"title": i, "payload": "/inform"})
+                    dispatcher.utter_button_message('Let\'s begin.\nPlease select a size for your pizza: ', buttons_pizza_size)
+                elif slot == 'crust':
+                    buttons_crust = []
+                    for i in ['oven fresh', 'thin crust']:
+                        buttons_crust.append({"title": i, "payload": "/inform"})
+                    dispatcher.utter_button_message('Please select a crust: ', buttons_crust)
+                elif slot == 'toppings_veggies':
+                    buttons_toppings_veggies = []
+                    file = open('toppings_veggies.txt', 'r')
+                    for i in file:
+                        buttons_toppings_veggies.append({"title": i, "payload": "/inform"})
+                    dispatcher.utter_button_message('Now, select your veggies: ', buttons_toppings_veggies)
+                    file.close()
+                elif slot == 'toppings_meat':
+                    buttons_toppings_meat = []
+                    file = open('toppings_meat.txt', 'r')
+                    for i in file:
+                        buttons_toppings_meat.append({"title": i, "payload": "/inform"})
+                    dispatcher.utter_button_message('Select meat: ', buttons_toppings_meat)
+                    file.close()
+                elif slot == 'toppings_cheese':
+                    buttons_toppings_cheese = []
+                    file = open('toppings_cheese.txt', 'r')
+                    for i in file:
+                        buttons_toppings_cheese.append({"title": i, "payload": "/inform"})
+                    dispatcher.utter_button_message('Last thing, what type of cheeswe do you want?: ', buttons_toppings_cheese)
+                    file.close()
+
+                return [SlotSet(REQUESTED_SLOT, slot)]
+
+        logger.debug("No slots left to request")
+        return None
+
+    def submit(self, dispatcher, tracker, domain):
+
+        size = tracker.get_slot('pizza_size')
+        crust = tracker.get_slot('crust')
+        veggies = tracker.get_slot('toppings_veggies')
+        meat = tracker.get_slot('toppings_meat')
+        cheese = tracker.get_slot('toppings_cheese')
+
+        dispatcher.utter_message('Here is your order:\nSize: {}\nCrust: {}\nVeggies: {}\nMeat: {}\nCheese: {}'.format(size, crust,veggies, meat, cheese))
+        # dispatcher.utter_message(size)
+        # dispatcher.utter_message(crust)
+        # dispatcher.utter_message(veggies)
+        # dispatcher.utter_message(meat)
+        # dispatcher.utter_message(cheese)
+
+        return [SlotSet(val, None) for val in ['pizza_size', 'crust', 'toppings_veggies', 'toppings_meat', 'toppings_cheese']]
+
+class ActionOrderConfirmation(Action):
+    '''
+    Order confirmation
+    '''
+    def name(self):
+        return 'action_order_confirmation'
+
+    def run(self, dispatcher, tracker, domain):
+        confirm = tracker.latest_message['intent'].get('name')
+
+        if confirm == 'affirm':
+            dispatcher.utter_message('You\'re all set!\nThank you for placing an order with us!')
+            return [SlotSet(val, None) for val in ['pizza_size', 'crust', 'toppings_veggies', 'toppings_meat', 'toppings_cheese']]
+        elif confirm == 'deny':
+            dispatcher.utter_message('Okay, I won\'t place the order.\nI hope you come back soon!')
+            return [SlotSet(val, None) for val in ['pizza_size', 'crust', 'toppings_veggies', 'toppings_meat', 'toppings_cheese']]

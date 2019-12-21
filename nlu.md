@@ -141,3 +141,87 @@
 - i need a pizza
 - want a pizza
 - need a pizza
+
+## intent:make_own_pizza
+- want own pizza
+- I want to make my own
+- own
+- I'll make my own Pizza
+- I want to make my own
+- make your own
+
+## intent:inform
+- [small](pizza_size)
+- [medium](pizza_size)
+- [large](pizza_size)
+- [thin crust](crust)
+- [oven fresh](crust)
+- [thin-crust](crust)
+- [oven-fresh](crust)
+- [cheddar, feta, brie, swiss](toppings_cheese)
+- [cheddar](toppings_cheese)
+- [feta, gouda, swiss](toppings_cheese)
+- [brie, cheddar](toppings_cheese)
+- [swiss, parmigiano](toppings_cheese)
+- [mozzarella](toppings_cheese)
+- [parmigiano, ricotta](toppings_cheese)
+- [ricotta, cheddar](toppings_cheese)
+- [gouda, swiss](toppings_cheese)
+- [tomato, onion, olives](toppings_veggies)
+- [tomato, red pepper, green pepper](toppings_veggies)
+- [tomato, onion, jalapenos](toppings_veggies)
+- [tomato, onion](toppings_veggies)
+- [onion, spinach, mushrooms](toppings_veggies)
+- [red pepper, onion](toppings_veggies)
+- [mushrooms](toppings_veggies)
+- [olives, green pepper](toppings_veggies)
+- [spinach](toppings_veggies)
+- [spinach, green pepper](toppings_veggies)
+- [green pepper](toppings_veggies)
+- [jalapenos](toppings_veggies)
+- [chicken](toppings_meat)
+- [pork](toppings_meat)
+- [shrimp](toppings_meat)
+- [pork, shrimp](toppings_meat)
+- [pork, chicken](toppings_meat)
+
+## intent:affirm
+- correct
+- ye
+- uh yes
+- let's do it
+- yeah
+- uh yes
+- um yes
+- yes knocking
+- that's correct
+- yes yes
+- right
+- yea
+- yes
+- yes right
+- yes and i dont care
+- right on
+- i love that
+- sure
+- sure shot
+- i confirm
+- confirm
+- alright
+- okay
+- Okay
+- Ok
+
+## intent:deny
+- no
+- no new selection
+- no thanks
+- no thank you
+- uh no
+- breath no
+- do you have something else
+- no this does not work for me
+- continue
+- do continue
+- Don't Share
+- Dont share
