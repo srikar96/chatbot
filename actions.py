@@ -7,6 +7,16 @@ from rasa_core_sdk import ActionExecutionRejection
 from rasa_core_sdk import Tracker
 from rasa_core_sdk.executor import CollectingDispatcher
 from rasa_core_sdk.forms import FormAction, REQUESTED_SLOT
+from bson.json_util import dumps
+import pymongo as pm
+
+client = pm.MongoClient("mongodb://localhost:27017/")
+db = client['pizza']
+col1 = db['sizep']
+col2 = db['crust']
+col3 = db['veggies']
+col4 = db['meat']
+col5 = db['cheese']
 
 class ActionFAQ(Action):
     '''
@@ -38,35 +48,32 @@ class MakeOwnPizzaForm(FormAction):
     #    return {"doc_id": self.from_entity(entity="doc_id"),
     #             "booking_time": self.from_entity(entity="booking_time")}
 
-    # def validate(self, dispatcher, tracker, domain):
-    #
-    #     slot_values = self.extract_other_slots(dispatcher, tracker, domain)
-    #     slot_to_fill = tracker.get_slot(REQUESTED_SLOT)
-    #     if slot_to_fill:
-    #         slot_values.update(self.extract_requested_slot(dispatcher,
-    #                                                        tracker, domain))
-    #         if not slot_values:
-    #             raise ActionExecutionRejection(self.name(),
-    #                                            "Failed to validate slot {0} "
-    #                                            "with action {1}"
-    #                                            "".format(slot_to_fill,
-    #                                                      self.name()))
-    #
-    #     for slot, value in slot_values.items():
-    #         # verfity all slots: 1) check if doctor is valid, 2) check if that day is free, 3) check if time is free
-    #         if slot == 'DATE':
-    #             data = date_checker(value, tracker.get_slot('doc_id'), tracker.get_slot('practice_name'))
-    #             if len(data['free']) == 0:
-    #                 dispatcher.utter_message('Sorry, Dr. {} is all booked for {}. Please select a different date.'.format(doc_name(tracker.get_slot('doc_id')), tracker.get_slot('DATE')))
-    #                 slot_values[slot] = None
-    #         elif slot == 'booking_time':
-    #             data = date_checker(tracker.get_slot('DATE'), tracker.get_slot('doc_id'), tracker.get_slot('practice_name'))
-    #             data1 = t_convert_rev(value)
-    #             if data1 not in data['free']:
-    #                 dispatcher.utter_template('utter_ask_booking_time_overtime', tracker)
-    #                 slot_values[slot] = None
-    #
-    #     return [SlotSet(slot, value) for slot, value in slot_values.items()]
+    def validate(self, dispatcher, tracker, domain):
+
+        slot_values = self.extract_other_slots(dispatcher, tracker, domain)
+        slot_to_fill = tracker.get_slot(REQUESTED_SLOT)
+        if slot_to_fill:
+            slot_values.update(self.extract_requested_slot(dispatcher,
+                                                           tracker, domain))
+            if not slot_values:
+                raise ActionExecutionRejection(self.name(),
+                                               "Failed to validate slot {0} "
+                                               "with action {1}"
+                                               "".format(slot_to_fill,
+                                                         self.name()))
+
+        for slot, value in slot_values.items():
+            if slot == 'pizza_type':
+                if value not in ['veg', 'non veg']:
+                    dispatcher.utter_message('I didn\'t get that. Please select veg or no veg.')
+                    slot_values[slot] = None
+            elif slot == 'pizza_size':
+                data1 = [i['type'] for i in col1.find({},{'_id':0, 'type':1})]
+                if value not in data1:
+                    dispatcher.utter_message('Please select a valid response')
+                    slot_values[slot] = None
+
+        return [SlotSet(slot, value) for slot, value in slot_values.items()]
 
     def request_next_slot(self, dispatcher, tracker, domain):
         '''
@@ -84,34 +91,39 @@ class MakeOwnPizzaForm(FormAction):
                     dispatcher.utter_button_message('Let\'s begin.\nPlease select a a pizza type: ', buttons_pizza_type)
                 elif slot == 'pizza_size':
                     buttons_pizza_size = []
-                    for i in ['small','medium','large']:
-                        buttons_pizza_size.append({"title": i, "payload": "/inform"})
+                    dat = col1.find({},{'_id':0, 'type':1})
+                    for i in dat:
+                        buttons_pizza_size.append({"title": i['type'], "payload": "/inform"})
                     dispatcher.utter_button_message('Please select a size for your pizza: ', buttons_pizza_size)
                 elif slot == 'crust':
                     buttons_crust = []
-                    for i in ['oven fresh', 'thin crust']:
-                        buttons_crust.append({"title": i, "payload": "/inform"})
+                    dat = col2.find({},{'_id':0, 'type':1})
+                    for i in dat:
+                        buttons_crust.append({"title": i['type'], "payload": "/inform"})
                     dispatcher.utter_button_message('Please select a crust: ', buttons_crust)
                 elif slot == 'toppings_veggies':
                     buttons_toppings_veggies = []
-                    file = open('toppings_veggies.txt', 'r')
+                    # file = open('toppings_veggies.txt', 'r')
+                    file = col3.find({},{'_id':0, 'type':1})
                     for i in file:
-                        buttons_toppings_veggies.append({"title": i, "payload": "/inform"})
+                        buttons_toppings_veggies.append({"title": i['type'], "payload": "/inform"})
                     dispatcher.utter_button_message('Now, select your veggies: ', buttons_toppings_veggies)
                     file.close()
                 elif slot == 'toppings_meat':
                     buttons_toppings_meat = []
-                    file = open('toppings_meat.txt', 'r')
+                    # file = open('toppings_meat.txt', 'r')
+                    file = col4.find({},{'_id':0, 'type':1})
                     for i in file:
-                        buttons_toppings_meat.append({"title": i, "payload": "/inform"})
+                        buttons_toppings_meat.append({"title": i['type'], "payload": "/inform"})
                     dispatcher.utter_button_message('Select meat: ', buttons_toppings_meat)
                     file.close()
                 elif slot == 'toppings_cheese':
                     buttons_toppings_cheese = []
-                    file = open('toppings_cheese.txt', 'r')
+                    # file = open('toppings_cheese.txt', 'r')
+                    file = col5.find({},{'_id':0, 'type':1})
                     for i in file:
-                        buttons_toppings_cheese.append({"title": i, "payload": "/inform"})
-                    dispatcher.utter_button_message('Last thing, what type of cheeswe do you want?: ', buttons_toppings_cheese)
+                        buttons_toppings_cheese.append({"title": i['type'], "payload": "/inform"})
+                    dispatcher.utter_button_message('Last thing, what type of cheese do you want?: ', buttons_toppings_cheese)
                     file.close()
 
                 return [SlotSet(REQUESTED_SLOT, slot)]
@@ -127,15 +139,41 @@ class MakeOwnPizzaForm(FormAction):
             crust = tracker.get_slot('crust')
             veggies = tracker.get_slot('toppings_veggies')
             cheese = tracker.get_slot('toppings_cheese')
+
+            price_size = col1.find_one({'type': size},{'_id':0, 'price':1})['price']
+            price_crust = col2.find_one({'type': crust},{'_id':0, 'price':1})['price']
+            price_veggies = 0
+            price_cheese = 0
+            for val in veggies:
+                price_veggies += col3.find_one({'type': val},{'_id':0, 'price':1})['price']
+            for val in cheese:
+                price_cheese += col5.find_one({'type': val},{'_id':0, 'price':1})['price']
+
+            tot_price = price_size*price_crust + price_veggies + price_cheese
             dispatcher.utter_message('Here is your order:\nSize: {}\nCrust: {}\nVeggies: {}\nCheese: {}'.format(size, crust, veggies, cheese))
+            dispatcher.utter_message('Your bill is: ${}'.format(tot_price))
         else:
             size = tracker.get_slot('pizza_size')
             crust = tracker.get_slot('crust')
             veggies = tracker.get_slot('toppings_veggies')
             meat = tracker.get_slot('toppings_meat')
             cheese = tracker.get_slot('toppings_cheese')
-            dispatcher.utter_message('Here is your order:\nSize: {}\nCrust: {}\nVeggies: {}\nMeat: {}\nCheese: {}'.format(size, crust, veggies, meat, cheese))
 
+            price_size = col1.find_one({'type': size},{'_id':0, 'price':1})['price']
+            price_crust = col2.find_one({'type': crust},{'_id':0, 'price':1})['price']
+            price_veggies = 0
+            price_cheese = 0
+            price_meat = 0
+            for val in veggies:
+                price_veggies += col3.find_one({'type': val},{'_id':0, 'price':1})['price']
+            for val in meat:
+                price_meat += col4.find_one({'type': val},{'_id':0, 'price':1})['price']
+            for val in cheese:
+                price_cheese += col5.find_one({'type': val},{'_id':0, 'price':1})['price']
+
+            tot_price = price_size*price_crust + price_veggies + price_cheese + price_meat
+            dispatcher.utter_message('Here is your order:\nSize: {}\nCrust: {}\nVeggies: {}\nMeat: {}\nCheese: {}'.format(size, crust, veggies, meat, cheese))
+            dispatcher.utter_message('Your bill is: ${}'.format(tot_price))
         # dispatcher.utter_message(size)
         # dispatcher.utter_message(crust)
         # dispatcher.utter_message(veggies)
