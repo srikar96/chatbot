@@ -32,15 +32,11 @@
 * goodbye
     - utter_goodbye
 
-## story 3
-* greet
-    - utter_greet
+## FAQs
 * bot_functions_faq OR agent_age_faq OR agent_identity_faq OR agent_health_faq
     - action_faq
-* request_menu
-    - utter_request_menu
-* goodbye
-    - utter_goodbye
+* bot_functions_faq OR agent_age_faq OR agent_identity_faq OR agent_health_faq
+    - action_faq
 
 ## Pizza form affirm
 * make_own_pizza
@@ -59,3 +55,33 @@
     - utter_order_confirmation
 * deny
     - action_order_confirmation
+
+## Story 4
+* greet
+    - utter_greet
+* bot_functions_faq OR agent_age_faq OR agent_identity_faq OR agent_health_faq
+    - action_faq
+* make_own_pizza
+    - make_own_pizza_form
+    - form{"name": "make_own_pizza_form"}
+    - form{"name": "null"}
+    - utter_order_confirmation
+* affirm
+    - action_order_confirmation
+* goodbye
+    - utter_goodbye
+
+## Story 5
+* greet
+    - utter_greet
+* bot_functions_faq OR agent_age_faq OR agent_identity_faq OR agent_health_faq
+    - action_faq
+* make_own_pizza
+    - make_own_pizza_form
+    - form{"name": "make_own_pizza_form"}
+    - form{"name": "null"}
+    - utter_order_confirmation
+* deny
+    - action_order_confirmation
+* goodbye
+    - utter_goodbye

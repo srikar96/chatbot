@@ -8,15 +8,15 @@ slots:
   toppings_veggies: # Need a list slot
    type: list
    auto_fill: false
-   # initial_value: []
   toppings_meat: # Need a list slot
    type: list
    auto_fill: false
-   # initial_value: []
   toppings_cheese: # Need a list slot
    type: list
    auto_fill: false
-   # initial_value: []
+  pizza_type:
+   type: unfeaturized
+   auto_fill: false
 
 forms:
   - make_own_pizza_form
@@ -29,7 +29,7 @@ intents:
   - agent_identity_faq
   - agent_health_faq
   - bot_functions_faq
-  - request_menu
+  # - request_menu
   - make_own_pizza
   - inform
   - affirm
@@ -41,6 +41,7 @@ entities:
   - toppings_veggies
   - toppings_meat
   - toppings_cheese
+  - pizza_type
 
 actions:
   - utter_greet
@@ -82,7 +83,7 @@ templates:
   - text: "It's my pleasure to help."
 
   utter_bot_functions_faq:
-  - text: "I can help you order your food:\nJust tell me if you want a Pizza or Pasta."
+  - text: "I can help you order your Pizza:\nJust tell me if you want to make your own Pizza or take a look at our menu."
     buttons:
     - title: "Pizza"
       payload: '/book_appointment'
@@ -98,8 +99,8 @@ templates:
   - text: "I am Arya, a chatbot. What can I do for you today?"
   - text: "I am known as Arya, the pizza bot"
 
-  utter_request_menu:
-  - text: "Here's our menu:\nMENU_LINK\nYou can also make your own Pizza or Pasta. Just tell me if you want to"
+  # utter_request_menu:
+  # - text: "Here's our menu:\nMENU_LINK\nYou can also make your own Pizza or Pasta."
 
   utter_order_confirmation:
     - text: "Do you want me to confirm your order?"

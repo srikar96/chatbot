@@ -123,7 +123,7 @@
 - tell me about yourself
 - what all tasks can you perform?
 
-## intent:request_menu
+<!-- ## intent:request_menu
 - show me menu
 - i want the menu
 - i wish to see the menu
@@ -133,14 +133,7 @@
 - what all do u have?
 - show me your items
 - show menu items
-- list menu
-
-## intent:item_request
-- Pizza
-- i want pizza
-- i need a pizza
-- want a pizza
-- need a pizza
+- list menu -->
 
 ## intent:make_own_pizza
 - want own pizza
@@ -184,6 +177,12 @@
 - [shrimp](toppings_meat)
 - [pork, shrimp](toppings_meat)
 - [pork, chicken](toppings_meat)
+- [veg](pizza_type)
+- [non veg](pizza_type)
+- [vegetarian](pizza_type)
+- [non-veg](pizza_type)
+- [non vegetarian](pizza_type)
+- [non-vegetarian](pizza_type)
 
 ## intent:affirm
 - correct

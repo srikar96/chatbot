@@ -29,7 +29,10 @@ class MakeOwnPizzaForm(FormAction):
 
     @staticmethod
     def required_slots(tracker):
-        return ['pizza_size', 'crust', 'toppings_veggies', 'toppings_meat', 'toppings_cheese']
+        if ((tracker.get_slot('pizza_type') == 'veg') or (tracker.get_slot('pizza_type') == 'vegetarian')):
+            return ['pizza_type', 'pizza_size', 'crust', 'toppings_veggies', 'toppings_cheese']
+        else:
+            return ['pizza_type', 'pizza_size', 'crust', 'toppings_veggies', 'toppings_meat', 'toppings_cheese']
 
     # def slot_mapping(self):
     #    return {"doc_id": self.from_entity(entity="doc_id"),
@@ -74,11 +77,16 @@ class MakeOwnPizzaForm(FormAction):
         for slot in self.required_slots(tracker):
             if self._should_request_slot(tracker, slot):
                 logger.debug("Request next slot '{}'".format(slot))
-                if slot == 'pizza_size':
+                if slot == 'pizza_type':
+                    buttons_pizza_type = []
+                    for i in ['veg','non veg']:
+                        buttons_pizza_type.append({"title": i, "payload": "/inform"})
+                    dispatcher.utter_button_message('Let\'s begin.\nPlease select a a pizza type: ', buttons_pizza_type)
+                elif slot == 'pizza_size':
                     buttons_pizza_size = []
                     for i in ['small','medium','large']:
                         buttons_pizza_size.append({"title": i, "payload": "/inform"})
-                    dispatcher.utter_button_message('Let\'s begin.\nPlease select a size for your pizza: ', buttons_pizza_size)
+                    dispatcher.utter_button_message('Please select a size for your pizza: ', buttons_pizza_size)
                 elif slot == 'crust':
                     buttons_crust = []
                     for i in ['oven fresh', 'thin crust']:
@@ -113,20 +121,29 @@ class MakeOwnPizzaForm(FormAction):
 
     def submit(self, dispatcher, tracker, domain):
 
-        size = tracker.get_slot('pizza_size')
-        crust = tracker.get_slot('crust')
-        veggies = tracker.get_slot('toppings_veggies')
-        meat = tracker.get_slot('toppings_meat')
-        cheese = tracker.get_slot('toppings_cheese')
+        type = tracker.get_slot('pizza_type')
+        if type == 'veg' or type == 'vegetarian':
+            size = tracker.get_slot('pizza_size')
+            crust = tracker.get_slot('crust')
+            veggies = tracker.get_slot('toppings_veggies')
+            cheese = tracker.get_slot('toppings_cheese')
+            dispatcher.utter_message('Here is your order:\nSize: {}\nCrust: {}\nVeggies: {}\nCheese: {}'.format(size, crust, veggies, cheese))
+        else:
+            size = tracker.get_slot('pizza_size')
+            crust = tracker.get_slot('crust')
+            veggies = tracker.get_slot('toppings_veggies')
+            meat = tracker.get_slot('toppings_meat')
+            cheese = tracker.get_slot('toppings_cheese')
+            dispatcher.utter_message('Here is your order:\nSize: {}\nCrust: {}\nVeggies: {}\nMeat: {}\nCheese: {}'.format(size, crust, veggies, meat, cheese))
 
-        dispatcher.utter_message('Here is your order:\nSize: {}\nCrust: {}\nVeggies: {}\nMeat: {}\nCheese: {}'.format(size, crust,veggies, meat, cheese))
         # dispatcher.utter_message(size)
         # dispatcher.utter_message(crust)
         # dispatcher.utter_message(veggies)
         # dispatcher.utter_message(meat)
         # dispatcher.utter_message(cheese)
 
-        return [SlotSet(val, None) for val in ['pizza_size', 'crust', 'toppings_veggies', 'toppings_meat', 'toppings_cheese']]
+        # return [SlotSet(val, None) for val in ['pizza_size', 'crust', 'toppings_veggies', 'toppings_meat', 'toppings_cheese']]
+        return []
 
 class ActionOrderConfirmation(Action):
     '''
@@ -140,7 +157,7 @@ class ActionOrderConfirmation(Action):
 
         if confirm == 'affirm':
             dispatcher.utter_message('You\'re all set!\nThank you for placing an order with us!')
-            return [SlotSet(val, None) for val in ['pizza_size', 'crust', 'toppings_veggies', 'toppings_meat', 'toppings_cheese']]
+            return [SlotSet(val, None) for val in ['pizza_type', 'pizza_size', 'crust', 'toppings_veggies', 'toppings_meat', 'toppings_cheese']]
         elif confirm == 'deny':
             dispatcher.utter_message('Okay, I won\'t place the order.\nI hope you come back soon!')
-            return [SlotSet(val, None) for val in ['pizza_size', 'crust', 'toppings_veggies', 'toppings_meat', 'toppings_cheese']]
+            return [SlotSet(val, None) for val in ['pizza_type', 'pizza_size', 'crust', 'toppings_veggies', 'toppings_meat', 'toppings_cheese']]
