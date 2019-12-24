@@ -29,11 +29,13 @@ intents:
   - agent_identity_faq
   - agent_health_faq
   - bot_functions_faq
-  # - request_menu
   - make_own_pizza
   - inform
   - affirm
   - deny
+  - stop
+  - curse_bot
+  - utter_curse_bot
 
 entities:
   - pizza_size
@@ -48,9 +50,13 @@ actions:
   - utter_goodbye
   - utter_appraisal_thank_you
   - action_faq
-  - utter_request_menu
   - utter_order_confirmation
   - action_order_confirmation
+  - utter_curse_bot
+  - utter_affirm
+  - utter_ask_stop
+  - utter_stop
+  - action_slots_reset
 
 templates:
   utter_greet:
@@ -83,12 +89,12 @@ templates:
   - text: "It's my pleasure to help."
 
   utter_bot_functions_faq:
-  - text: "I can help you order your Pizza:\nJust tell me if you want to make your own Pizza or take a look at our menu."
+  - text: "I can help you order your Pizza:\nJust tell me if you want to make your own Pizza."
     buttons:
-    - title: "Pizza"
-      payload: '/book_appointment'
-    - title: "Pasta"
-      payload: '/view_booking'
+    - title: "own pizza"
+      payload: '/make_own_pizza'
+    - title: "make my own"
+      payload: '/make_own_pizza'
 
   utter_agent_age_faq:
   - text: "I prefer not to answer with a number. I know I'm young."
@@ -99,8 +105,8 @@ templates:
   - text: "I am Arya, a chatbot. What can I do for you today?"
   - text: "I am known as Arya, the pizza bot"
 
-  # utter_request_menu:
-  # - text: "Here's our menu:\nMENU_LINK\nYou can also make your own Pizza or Pasta."
+  utter_agent_health_faq:
+  - text: "I am doing very well.\nI hope you're fine too."
 
   utter_order_confirmation:
     - text: "Do you want me to confirm your order?"
@@ -109,3 +115,17 @@ templates:
         payload: '/affirm'
       - title: "No"
         payload: '/deny'
+
+  utter_curse_bot:
+  - text: "I'm sorry if I coudn't help you. I am still learning"
+
+  utter_affirm:
+  - text: "Great!"
+  - text: "Okay!"
+  - text: "Sure!"
+
+  utter_ask_stop:
+  - text: "Are you sure you don't want to continue?"
+
+  utter_stop:
+  - text: "Okay, I have stopped the current order."

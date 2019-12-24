@@ -123,18 +123,6 @@
 - tell me about yourself
 - what all tasks can you perform?
 
-<!-- ## intent:request_menu
-- show me menu
-- i want the menu
-- i wish to see the menu
-- show menu
-- what do you have?
-- what all do you have
-- what all do u have?
-- show me your items
-- show menu items
-- list menu -->
-
 ## intent:make_own_pizza
 - want own pizza
 - I want to make my own
@@ -142,6 +130,9 @@
 - I'll make my own Pizza
 - I want to make my own
 - make your own
+- own pizza
+- make my own
+- make my own pizza
 
 ## intent:inform
 - [small](pizza_size)
@@ -161,6 +152,8 @@
 - [parmigiano](toppings_cheese) [ricotta](toppings_cheese)
 - [ricotta](toppings_cheese) [cheddar](toppings_cheese)
 - [gouda](toppings_cheese) [swiss](toppings_cheese)
+- [gorgonzola](toppings_cheese) [provolone](toppings_cheese) [asiago](toppings_cheese)
+- [provolone](toppings_cheese) [asiago](toppings_cheese)
 - [tomato](toppings_veggies) [onion](toppings_veggies) [olives](toppings_veggies)
 - [tomato](toppings_veggies) [red pepper](toppings_veggies) [green pepper](toppings_veggies)
 - [tomato](toppings_veggies) [onion](toppings_veggies) [jalapenos](toppings_veggies)
@@ -168,6 +161,7 @@
 - [onion](toppings_veggies) [spinach](toppings_veggies) [mushrooms](toppings_veggies)
 - [red pepper](toppings_veggies) [onions](toppings_veggies)
 - [mushrooms](toppings_veggies)
+- [mushrooms](toppings_veggies) [yellow pepper](toppings_veggies)
 - [olives](toppings_veggies) [green pepper](toppings_veggies)
 - [spinach](toppings_veggies)
 - [spinach](toppings_veggies) [green pepper](toppings_veggies)
@@ -228,3 +222,32 @@
 - do continue
 - Don't Share
 - Dont share
+
+## intent:curse_bot
+- stupid
+- waste bot
+- idotic bot
+- useless
+- useless chat
+- lazy lazy bot
+- lazy
+- no use
+- wrong result
+- wrong respose
+- mad bot
+
+## intent:stop
+- stop
+- cancel booking
+- halt
+- halt booking
+- stop appointment
+- Cancel
+- Quit booking
+- quit
+- Dont continue
+- i want to stop booking
+- i dont want to continue
+- i want to stop booking
+- stop process
+- quit process

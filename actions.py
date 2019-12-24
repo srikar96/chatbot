@@ -199,3 +199,13 @@ class ActionOrderConfirmation(Action):
         elif confirm == 'deny':
             dispatcher.utter_message('Okay, I won\'t place the order.\nI hope you come back soon!')
             return [SlotSet(val, None) for val in ['pizza_type', 'pizza_size', 'crust', 'toppings_veggies', 'toppings_meat', 'toppings_cheese']]
+
+class ActionSlotReset(Action):
+    '''
+    Resets all the Slots
+    '''
+    def name(self):
+        return 'action_slots_reset'
+
+    def run(self, dispatcher, tracker, domain):
+        return [SlotSet(slot, None) for slot in ['pizza_type', 'pizza_size', 'crust', 'toppings_veggies', 'toppings_meat', 'toppings_cheese']]
